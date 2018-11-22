@@ -2,7 +2,7 @@
 
 # NextCloud Installation Script for Ubuntu
 # with SSL certificate provided by Let's Encrypt (letsencrypt.org)
-# Author: Subhash
+# Author: Subhash (serverkaka.com)
 
 # Check if running as root
 if [ "$(id -u)" != "0" ]; then
@@ -11,7 +11,6 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 datapath='/myData' # Path where user data is stored
-
 read -p 'nextcloud_url [xx.xx or xx.xx.xx]: ' nextcloud_url
 read -p 'nextcloud_version [x.x.x]: ' nextcloud_version
 read -p 'letsencrypt_email [xx@xx.xx]: ' letsencrypt_email
