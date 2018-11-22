@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# NextCloud Installation Script for Ubuntu 16.04
+# NextCloud Installation Script for Ubuntu
 # with SSL certificate provided by Let's Encrypt (letsencrypt.org)
 # Author: Subhash
 
@@ -10,7 +10,7 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-datapath='/cloudData' # Path where user data is stored
+datapath='/myData' # Path where user data is stored
 
 read -p 'nextcloud_url [xx.xx or xx.xx.xx]: ' nextcloud_url
 read -p 'nextcloud_version [x.x.x]: ' nextcloud_version
@@ -19,19 +19,18 @@ read -p 'db_root_password [secretpasswd]: ' db_root_password
 read -p 'db_user_password [passwd]: ' db_user_password
 echo
 
+# Check All variable have a value
 if [ -z $nextcloud_url ]|| [ -z $nextcloud_version ] || [ -z $letsencrypt_email ]|| [ -z $db_root_password ] || [ -z $db_user_password ]
 then
       echo run script again please insert all value. do not miss any value
 else
     
-# DO NOT EDIT BELOW THIS LINE
+# Installation start
 
 ocpath='/var/www/html' # Path where NextCloud is installed
 htuser='www-data' # User Apache runs as
 htgroup='www-data' # Group Apache runs as
 rootuser='root'
-
-# Update Repositories and Install Packages
 
 # Add PHP 7.0 Repository
 add-apt-repository ppa:ondrej/php -y
@@ -39,6 +38,8 @@ apt-get update
 
 # Install Apache, Redis and PHP extensions
 apt-get install apache2 -y
+
+# Install Redis and PHP extensions
 apt-get install php7.0 php7.0-curl php7.0-gd php7.0-fpm php7.0-cli php7.0-opcache php7.0-mbstring php7.0-xml php7.0-zip -y
 apt-get install redis-server php-redis -y
 
@@ -56,8 +57,7 @@ apt-get install libxml2-dev php7.0-zip php7.0-xml php7.0-gd php7.0-curl php7.0-m
 a2enmod rewrite
 service apache2 reload
 
-# Download Nextcloud into web directory
-#printf '<meta http-equiv="refresh" content="0;URL='"'""$nextcloud_url"'/nextcloud'"'"'" />' > /var/www/html/index.html
+# Download Nextcloud and move to web directory
 wget https://download.nextcloud.com/server/releases/nextcloud-$nextcloud_version.zip
 apt-get install unzip -y
 unzip nextcloud-$nextcloud_version.zip
@@ -67,7 +67,7 @@ mv .* $ocpath
 cd ..
 rm nextcloud-$nextcloud_version.zip
 
-# Create data directory if does not exist yet
+# Create data directory
 mkdir -p $datapath
 
 # Set file and folder permissions
@@ -131,8 +131,6 @@ crontab -u www-data cron
 rm cron
 
 # Enable HTTPS with Let's Encrypt SSL Certificate 
-# Set up cron job for certificate auto-renewal every 90 days
-
 apt-get install git -y
 cd /etc
 git clone https://github.com/certbot/certbot
@@ -140,6 +138,7 @@ cd certbot
 ./letsencrypt-auto --non-interactive --agree-tos --email $letsencrypt_email --apache -d $nextcloud_url --hsts
 printf "<VirtualHost *:80>\n     ServerName $nextcloud_url\n     Redirect / https://nextcloud_url/\n</VirtualHost>" > /etc/apache2/sites-enabled/nextcloud.conf
 service apache2 reload
+# Set up cron job for certificate auto-renewal every 90 days
 crontab -l > cron
 echo "* 1 * * 1 /etc/certbot/certbot-auto renew --quiet" >> cron
 crontab cron
