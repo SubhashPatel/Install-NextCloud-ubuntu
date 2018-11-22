@@ -144,5 +144,5 @@ crontab cron
 rm cron
 
 # Install complete
-printf "\n\nInstall complete.\nNavigate to your NextCloud instance in a web browser to complete the setup wizard, before you run the optimization script.\n\n"
+printf "\n\nInstallation complete.\nNavigate to http://$nextcloud_url in a web browser to complete the setup wizard, before you run the optimization script.\n\n"
 fi
