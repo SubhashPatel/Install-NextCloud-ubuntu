@@ -6,4 +6,5 @@ Before starting installing, make sure your server's IP address is properly bind 
 Download both files 
 
 chmod +x install-nextcloud-ubuntu.sh
+
 ./install-nextcloud-ubuntu.sh
