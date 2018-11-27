@@ -63,8 +63,10 @@ unzip nextcloud-$nextcloud_version.zip
 cd nextcloud
 mv * $ocpath
 mv .* $ocpath 
+
+# Delete Downloaded File
 cd ..
-rm nextcloud-$nextcloud_version.zip
+rm -rf nextcloud nextcloud-$nextcloud_version.zip
 
 # Create data directory
 mkdir -p $datapath
