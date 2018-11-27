@@ -106,7 +106,7 @@ fi
 
 # Configure Apache
 touch /etc/apache2/sites-available/nextcloud.conf
-printf "<VirtualHost *:80>\n\nServerName $nextcloud_url\nAlias /nextcloud "/var/www/html/"\n\n<Directory /var/www/html/>\n Options +FollowSymlinks\n AllowOverride All\n\n<IfModule mod_dav.c>\n Dav off\n</IfModule>\n\nSetEnv HOME /var/www/html\nSetEnv HTTP_HOME /var/www/html\n\n</Directory>\n\n</VirtualHost>" > /etc/apache2/sites-available/nextcloud.conf
+printf "<VirtualHost *:80>\n\nServerName ${nextcloud_url}\nAlias /nextcloud "/var/www/html/"\n\n<Directory /var/www/html/>\n Options +FollowSymlinks\n AllowOverride All\n\n<IfModule mod_dav.c>\n Dav off\n</IfModule>\n\nSetEnv HOME /var/www/html\nSetEnv HTTP_HOME /var/www/html\n\n</Directory>\n\n</VirtualHost>" > /etc/apache2/sites-available/nextcloud.conf
 ln -s /etc/apache2/sites-available/nextcloud.conf /etc/apache2/sites-enabled/nextcloud.conf
 a2enmod headers
 a2enmod env
