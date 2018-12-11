@@ -3,7 +3,7 @@ Install Nextcloud with Apache Web Server using single shell script
 
 Before starting installing, make sure your server's IP address is properly bind with A record in DNS.
 
-Download both files 
+Download both files and run below commands
 
 > `chmod +x install-nextcloud-ubuntu.sh`
 
