@@ -35,11 +35,13 @@ rootuser='root'
 add-apt-repository ppa:ondrej/php -y
 apt-get update
 
-# Install Apache, Redis and PHP extensions
+# Install Apache
 apt-get install apache2 -y
 
-# Install Redis and PHP extensions
+# Install PHP
 apt-get install php7.0 php7.0-curl php7.0-gd php7.0-fpm php7.0-cli php7.0-opcache php7.0-mbstring php7.0-xml php7.0-zip -y
+
+# Install Redis
 apt-get install redis-server php-redis -y
 
 # Install MySQL database server
