@@ -31,30 +31,31 @@ htuser='www-data' # User Apache runs as
 htgroup='www-data' # Group Apache runs as
 rootuser='root'
 
-# Add PHP 7.0 Repository
-add-apt-repository ppa:ondrej/php -y
+# Update System
 apt-get update
 
 # Install Apache
 apt-get install apache2 -y
 
+# Disable directory listing
+sudo sed -i "s/Options Indexes FollowSymLinks/Options FollowSymLinks/" /etc/apache2/apache2.conf
+
 # Install PHP
-apt-get install php7.0 php7.0-curl php7.0-gd php7.0-fpm php7.0-cli php7.0-opcache php7.0-mbstring php7.0-xml php7.0-zip -y
+sudo apt-get install php libapache2-mod-php php-common libapache2-mod-php php-mbstring php-xmlrpc php-soap php-apcu php-smbclient php-ldap php-redis php-gd php-xml php-intl php-json php-imagick php-mysql php-cli php-ldap php-zip php-curl -y
 
 # Install Redis
-apt-get install redis-server php-redis -y
+apt-get install redis-server -y
 
 # Install MySQL database server
 export DEBIAN_FRONTEND="noninteractive"
 debconf-set-selections <<< "mysql-server mysql-server/root_password password $db_root_password"
 debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $db_root_password"
-apt-get install mysql-server php7.0-mysql -y
+apt-get install mysql-server php-mysql -y
 
 # Enable Apache extensions
 a2enmod proxy_fcgi setenvif
-a2enconf php7.0-fpm
+a2enconf php-fpm
 service apache2 reload
-apt-get install libxml2-dev php7.0-zip php7.0-xml php7.0-gd php7.0-curl php7.0-mbstring -y
 a2enmod rewrite
 service apache2 reload
 
