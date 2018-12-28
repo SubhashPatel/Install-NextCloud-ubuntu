@@ -44,4 +44,7 @@ do
 sed -i "s/^\($key\).*/\1=$(eval echo \${$key})/" ${dirpath}/.user.ini
 done
 
+# Server Start
+service apache2 start
+
 printf "\n\nOptimization complete."
