@@ -47,4 +47,8 @@ done
 # Server Start
 service apache2 start
 
+# Run OCC for DB optimization
+cd /var/www/html/
+echo y | sudo -u www-data php occ db:convert-filecache-bigint
+
 printf "\n\nOptimization complete."
