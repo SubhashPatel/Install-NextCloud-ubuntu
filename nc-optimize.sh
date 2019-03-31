@@ -24,7 +24,7 @@ fi
 service apache2 stop
 
 # Enable PHP Opcache
-cd /etc/php/7.2/apache2/
+cd /etc/php/7.*/apache2/
 rm php.ini
 wget https://s3.amazonaws.com/serverkaka-pubic-file/nextcloud/php.ini
 
