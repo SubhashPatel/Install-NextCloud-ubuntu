@@ -139,7 +139,7 @@ apt-get install git -y
 cd /etc
 git clone https://github.com/certbot/certbot
 cd certbot
-./letsencrypt-auto --non-interactive --agree-tos --email $letsencrypt_email --apache -d $nextcloud_url --hsts
+./letsencrypt-auto --non-interactive --agree-tos --email $letsencrypt_email --apache -d $nextcloud_url --preferred-challenges http --hsts
 printf "<VirtualHost *:80>\n     ServerName $nextcloud_url\n     Redirect / https://$nextcloud_url/\n</VirtualHost>" > /etc/apache2/sites-enabled/nextcloud.conf
 service apache2 reload
 # Set up cron job for certificate auto-renewal every 90 days
